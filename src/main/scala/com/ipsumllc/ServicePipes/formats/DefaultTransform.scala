@@ -2,16 +2,17 @@ package com.ipsumllc.ServicePipes.formats
 
 import org.apache.camel.builder.RouteBuilder
 
-object DefaultTransform extends Transform {
+class DefaultTransform extends Transform {
+  import com.ipsumllc.ServicePipes.Router._
 
-  def transform(url: String): RouteBuilder = {
+  def transform(): RouteBuilder = {
     noTransform
   }
 
   def noTransform: RouteBuilder = {
     new RouteBuilder() {
       override def configure()= {
-        from(transformEndpt)
+        from(transformEndpoint)
           .to(publishEndpt)
           .end
       }

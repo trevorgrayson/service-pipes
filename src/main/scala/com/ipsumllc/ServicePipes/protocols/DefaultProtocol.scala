@@ -4,12 +4,13 @@ import org.apache.camel.builder.RouteBuilder
 
 
 object DefaultProtocol extends Protocol {
+  import com.ipsumllc.ServicePipes.Router._
 
-  def producer(url: String, transform: String = transformEndpt): RouteBuilder = {
+  def producer(url: String, transform: String = transformEndpoint): RouteBuilder = {
     return new RouteBuilder() {
       override def configure() = {
         from(url).
-          to(transformEndpt).
+          to(transform).
           end()
       }
     }

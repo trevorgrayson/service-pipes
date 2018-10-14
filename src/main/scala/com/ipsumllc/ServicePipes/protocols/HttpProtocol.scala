@@ -1,11 +1,13 @@
 package com.ipsumllc.ServicePipes.protocols
 
-import org.apache.camel.{Exchange}
+import com.ipsumllc.ServicePipes.Router
+import org.apache.camel.Exchange
 import org.apache.camel.builder.RouteBuilder
 
 object HttpProtocol extends Protocol {
+  import Router._
 
-  def producer(url: String, transform: String = transformEndpt): RouteBuilder = {
+  def producer(url: String, transform: String = transformEndpoint): RouteBuilder = {
     return new RouteBuilder() {
       override def configure() = {
         from(stream)

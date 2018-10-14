@@ -3,7 +3,7 @@ package com.ipsumllc.ServicePipes
 import java.net.URL
 
 import com.ipsumllc.ServicePipes.protocols.{DefaultProtocol, HttpProtocol, Protocol}
-import com.ipsumllc.ServicePipes.formats.{DefaultTransform, XmlSplitter}
+import com.ipsumllc.ServicePipes.formats._
 import org.apache.camel.impl.DefaultCamelContext
 
 class ServicePipe(from: String, to: String) {
@@ -11,19 +11,20 @@ class ServicePipe(from: String, to: String) {
   val context = new DefaultCamelContext()
 
   implicit def `string to url`(s: String) = {
-    new URL(s.replace("http4:", "http:"))
+    val ss = s.replace("http4:", "http:")
+    new URL(ss)
   }
 
-  def process() = {
+  def process(request: Option[TransformRequest]) = {
 
     // producer
     context.addRoutes(
-      getProtocol(from).producer(from, DefaultTransform.transformEndpt)
+      getProtocol(from).producer(from, Router.transformEndpoint)
     )
 
     // transform
-    context.addRoutes(XmlSplitter.transform("program"))
-
+    val transform = request.getOrElse(TransformRequest("", "")).getTransform
+    context.addRoutes(transform.transform())
     // publish to consumer
     context.addRoutes(
       getProtocol(to).consumer(to)
@@ -31,7 +32,7 @@ class ServicePipe(from: String, to: String) {
 
     context.start()
     val producer = context.createProducerTemplate
-    producer.sendBody(HttpProtocol.stream, "")
+    producer.sendBody(Router.stream, "")
     context.stop()
   }
 

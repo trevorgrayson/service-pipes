@@ -1,14 +1,15 @@
 package com.ipsumllc.ServicePipes.formats
 
+import com.ipsumllc.ServicePipes.Router
 import org.apache.camel.builder.RouteBuilder
 
-object XmlSplitter extends Transform {
-
+class XmlSplitter(element: String) extends Transform {
+  import Router._
   val FORMAT = "xml"
 
-  def transform(element: String) =  new RouteBuilder() {
-    def configure(): Unit = {
-      from(transformEndpt) //formatEndpoint(element))
+  def transform() =  new RouteBuilder() {
+    def configure() = {
+      from(transformEndpoint) //formatEndpoint(element))
         .split
         .tokenizeXML(element)
         .streaming
@@ -19,6 +20,6 @@ object XmlSplitter extends Transform {
   }
 
   def formatEndpoint(delimiter: String) = {
-    transformEndpt + ":" + FORMAT + ":" + delimiter
+    transformEndpoint + ":" + FORMAT + ":" + delimiter
   }
 }

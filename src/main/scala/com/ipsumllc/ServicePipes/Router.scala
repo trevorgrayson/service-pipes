@@ -1,9 +1,11 @@
 package com.ipsumllc.ServicePipes
 
-class Router {
+object Router {
   val stream: String = "direct:start"
 
-  val transformEndpt: String = "direct:transform"
+  val transformEndpoint: String = "direct:transform"
 
   val publishEndpt: String = "direct:publish"
 }
+
+trait Router
