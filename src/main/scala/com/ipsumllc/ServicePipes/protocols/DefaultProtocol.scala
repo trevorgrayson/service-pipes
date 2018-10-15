@@ -9,9 +9,11 @@ object DefaultProtocol extends Protocol {
   def producer(url: String, transform: String = transformEndpoint): RouteBuilder = {
     return new RouteBuilder() {
       override def configure() = {
-        from(url).
-          to(transform).
-          end()
+        from(url)
+          .to(transform)
+          .noStreamCaching()
+          .end()
+
       }
     }
   }

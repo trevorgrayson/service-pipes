@@ -19,12 +19,13 @@ class ServicePipe(from: String, to: String) {
 
     // producer
     context.addRoutes(
-      getProtocol(from).producer(from, Router.transformEndpoint)
+      getProtocol(from).producer(from)
     )
 
     // transform
     val transform = request.getOrElse(TransformRequest("", "")).getTransform
     context.addRoutes(transform.transform())
+
     // publish to consumer
     context.addRoutes(
       getProtocol(to).consumer(to)

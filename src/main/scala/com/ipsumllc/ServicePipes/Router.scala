@@ -8,4 +8,6 @@ object Router {
   val publishEndpt: String = "direct:publish"
 }
 
-trait Router
+trait Router {
+  import Router._
+}

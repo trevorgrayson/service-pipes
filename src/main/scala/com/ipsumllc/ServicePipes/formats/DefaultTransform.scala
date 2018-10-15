@@ -2,6 +2,7 @@ package com.ipsumllc.ServicePipes.formats
 
 import org.apache.camel.builder.RouteBuilder
 
+
 class DefaultTransform extends Transform {
   import com.ipsumllc.ServicePipes.Router._
 
