@@ -2,7 +2,7 @@ package com.ipsumllc.ServicePipes
 
 import java.net.URL
 
-import com.ipsumllc.ServicePipes.protocols.{DefaultProtocol, HttpProtocol, Protocol}
+import com.ipsumllc.ServicePipes.protocols.{DefaultProtocol, FileProtocol, HttpProtocol, Protocol}
 import com.ipsumllc.ServicePipes.formats._
 import org.apache.camel.impl.DefaultCamelContext
 
@@ -40,6 +40,7 @@ class ServicePipe(from: String, to: String) {
   def getProtocol(url: URL): Protocol = {
     url.getProtocol() match {
       case "http" => HttpProtocol
+      case "file" => FileProtocol
       case _ => DefaultProtocol
     }
   }
